@@ -5,3 +5,7 @@
   grid-gap: 20px;
   background: lightblue;
 }
+.App main {
+  overflow: auto;
+  padding: 20px;
+}
