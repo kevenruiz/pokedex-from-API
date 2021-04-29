@@ -3,8 +3,8 @@ import './App.css';
 import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
-import PokemonList from 'PokemonList';
-import Pokemon from './Pokemon';
+import PokemonList from './PokemonList';
+import pokemon from './Pokemon';
 
 
 class App extends Component {
@@ -15,7 +15,7 @@ class App extends Component {
         <Header />
 
         <main>
-          <PokemonList pokemon={Pokemon} />
+          <PokemonList pokemon={pokemon} />
           <li>
             Hello
           </li>
