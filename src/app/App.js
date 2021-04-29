@@ -12,9 +12,16 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-  
-        My React App...
-        <img src="acl-logo.png" className="temp-images" alt="acl logo" />
+        <Header />
+
+        <main>
+          <PokemonList pokemon={Pokemon} />
+          <li>
+            Hello
+          </li>
+
+        </main>
+        <Footer />
       
       </div>
     );
