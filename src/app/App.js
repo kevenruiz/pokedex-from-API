@@ -18,32 +18,34 @@ import Paging from './Pokemon-Paging';
 */
 
 const POKEMON_API_URL = 'https://pokedex-alchemy.herokuapp.com/api/pokedex';
+const POKEMON_TYPES_URL = 'https://pokedex-alchemy.herokuapp.com/api/pokedex/types';
 
 class App extends Component {
 
   state = {
     pokemons: [],
-
+    typeState: undefined,
     search: undefined,
-    page: 1
+    page: 1,
+    typeArray: []
   }
 
   componentDidMount() {
     this.fetchPokemons();
+    this.fetchTypes();
   }
 
   async fetchPokemons() {
-    const { search, page } = this.state;
+    const { search, page, typeState } = this.state;
 
-
-
-
+  
     try {
       const response = await request
         .get(POKEMON_API_URL)
         .query({ pokemon: search })
-        .query({ page: page });
-      console.log(response.body.results);
+        .query({ page: page })
+        .query({ type: typeState });
+
 
       this.setState({ pokemons: response.body.results });
       
@@ -55,13 +57,33 @@ class App extends Component {
       this.setState({ loading: false });
     }
   }
+  async fetchTypes() {
+    try {
+      const response = await request
+        .get(POKEMON_TYPES_URL);
+      this.setState({
+        typeArray: response.body.map(booger => booger.type)
 
-  handleSearch = ({ search }) => {
+      });
+
+    }
+    catch (err) {
+      console.log(err);
+    }
+  }
+
+
+  handleSearch = ({ search, typeState }) => {
     this.setState(
-      { search: search, page: 1 },
+      {
+        search: search,
+        page: 1,
+        typeState: typeState || undefined
+      },
       () => this.fetchPokemons()
     );
   }
+
 
   handlePrevPage = () => {
     this.setState(
@@ -84,24 +106,26 @@ class App extends Component {
 
   render() {
 
-    const { pokemons, page } = this.state;
-    console.log(pokemons);
+    const { pokemons, page, typeState, typeArray } = this.state;
+
+
 
     return (
       <div className="App">
         <Header />
 
         <main>
-          <Search />
-          <PokemonList pokemon={pokemons} />
           <section className="search-options">
-            <Search onSubmit={this.handleSearch} />
+            <Search onSubmit={this.handleSearch} typeFilter={typeState} typeArray={typeArray} />
             <Paging
               page={page}
               onPrev={this.handlePrevPage}
               onNext={this.handleNextPage}
             />
           </section>
+
+          <PokemonList pokemon={pokemons} />
+
 
 
 
