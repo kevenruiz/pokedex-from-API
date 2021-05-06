@@ -44,7 +44,7 @@ export default class Search extends Component {
 
 */
   handleNameChange = ({ target }) => {
-    this.setState({ pokemonFilter: target.value });
+    this.setState({ search: target.value });
   }
 
   handleSearchChange = ({ target }) => {
@@ -57,16 +57,17 @@ export default class Search extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.onSearch(this.state);
+    this.props.onSubmit(this.state);
   }
-  componentDidUpdate(prevProp, prevState) {
+  /*componentDidUpdate(prevProp, prevState) {
     if (prevState !== this.state) {
-      this.props.onSearch(this.state);
+      this.props.onSubmit(this.state);
     }
   }
+  */
 
   render() {
-    const { pokemonFilter, sortField } = this.state;
+    const { search, sortField } = this.state;
     const { typeArray, typeFilter } = this.props;
 
 
@@ -74,8 +75,8 @@ export default class Search extends Component {
     return (
       <form className='PokemonSearch' onSubmit={this.handleSubmit}>
         <input
-          name='nameFilter'
-          value={pokemonFilter}
+          name='search'
+          value={search}
           onChange={this.handleNameChange}
 
         />
