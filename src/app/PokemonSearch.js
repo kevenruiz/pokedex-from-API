@@ -83,7 +83,7 @@ export default class Search extends Component {
         >
           <option value="">sort...</option>
           <option value="pokemon">by pokemon</option>
-          <option value="type">by id</option>
+
         </select>
         <select
           name="typeFilter"
