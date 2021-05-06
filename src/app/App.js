@@ -37,6 +37,7 @@ class App extends Component {
 
   async fetchPokemons() {
     const { search, page, typeState } = this.state;
+    console.log(search, page, typeState);
 
   
     try {
@@ -76,7 +77,7 @@ class App extends Component {
   handleSearch = ({ search, typeState }) => {
     this.setState(
       {
-        search: search,
+        search: search || undefined,
         page: 1,
         typeState: typeState || undefined
       },
@@ -100,13 +101,26 @@ class App extends Component {
     );
   }
 
+  handleTypeChange = ({ target }) => {
+    this.setState({ typeState: target.value });
 
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.fetchPokemons();
+  }
+  handleNameChange = ({ target }) => {
+    this.setState({ search: target.value });
+  }
 
 
 
   render() {
 
-    const { pokemons, page, typeState, typeArray } = this.state;
+    const { pokemons, page, typeArray } = this.state;
+
+    console.log(this.state.typeState);
 
 
 
@@ -116,7 +130,13 @@ class App extends Component {
 
         <main>
           <section className="search-options">
-            <Search onSubmit={this.handleSearch} typeFilter={typeState} typeArray={typeArray} />
+            <Search
+              onSubmit={this.handleSearch}
+              handleSubmit={this.handleSubmit}
+              handleTypeChange={this.handleTypeChange}
+              typeArray={typeArray}
+              handleNameChange={this.handleNameChange}
+            />
             <Paging
               page={page}
               onPrev={this.handlePrevPage}

@@ -43,22 +43,18 @@ export default class Search extends Component {
 // this is where the new code ends. We want to change the new code to fit the data from the API> might need help to make it work together.
 
 */
-  handleNameChange = ({ target }) => {
-    this.setState({ search: target.value });
-  }
+
 
   handleSearchChange = ({ target }) => {
     this.setState({ sortField: target.value });
   }
 
-  handleidChange = ({ target }) => {
-    this.setState({ idFilter: target.value });
+  handleTypeChange = ({ target }) => {
+    this.setState({ typeFilter: target.value });
+
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.onSubmit(this.state);
-  }
+
   /*componentDidUpdate(prevProp, prevState) {
     if (prevState !== this.state) {
       this.props.onSubmit(this.state);
@@ -67,17 +63,17 @@ export default class Search extends Component {
   */
 
   render() {
-    const { search, sortField } = this.state;
-    const { typeArray, typeFilter } = this.props;
+    const { sortField } = this.state;
+    const { typeArray, typeFilter, handleTypeChange, handleSubmit, handleNameChange } = this.props;
 
 
 
     return (
-      <form className='PokemonSearch' onSubmit={this.handleSubmit}>
+      <form className='PokemonSearch' onSubmit={handleSubmit}>
         <input
           name='search'
-          value={search}
-          onChange={this.handleNameChange}
+
+          onChange={handleNameChange}
 
         />
         <select
@@ -87,12 +83,12 @@ export default class Search extends Component {
         >
           <option value="">sort...</option>
           <option value="pokemon">by pokemon</option>
-          <option value="id">by id</option>
+          <option value="type">by id</option>
         </select>
         <select
           name="typeFilter"
           value={typeFilter}
-          onChange={this.handleidChange}
+          onChange={handleTypeChange}
         >
           <option value="">All</option>
           {typeArray.map(booger => (
